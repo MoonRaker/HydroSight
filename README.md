@@ -3,7 +3,7 @@ Python language version of the HydroSight Matlab toolbox was created by Tim Pete
 
 The HydroSight Matlab toolbox was first described in the following publication:
 
-Peterson, T. J. and Western, A. W. (2014). Nonlinear time‐series modeling of unconfined groundwater head. Water Resources Research, 50(10), 8330-8355.
+* Peterson, T. J. and Western, A. W. (2014). Nonlinear time‐series modeling of unconfined groundwater head. Water Resources Research, 50(10), 8330-8355.
 
 and subsequently implemented in the following publications: 
 
