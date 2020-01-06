@@ -2,39 +2,43 @@
 import numpy as np
 
 
-# Pearson's type III impulse response transfer def class. 
-class responsedef_Pearsons():
+class responsedef_Pearsons:
+
+
+    # Pearson's type III impulse response transfer def class. 
 
 
     def __init__(self, bore_ID, forcingDataSiteID, siteCoordinates, options, params):
                         
-            # Define default parameters 
-            if nargin==4:
-                params = [np.log10(1.), np.log10(0.01), np.log10(1.5)]
-            
-            # Set parameters for transfer def.
-            setParameters(self, params)     
-            
-            # Initialise the private property, t_limit, 
-            # defining the lower limit to an exponetial 
-            # repsonse def.
-            self.settings.t_limit = np.nan
-            self.settings.weight_at_limit = np.nan
-            
-            if (~isempty(options)) & (iscell(options)):  
-                self.settings.params_lowerPhysicalLimit = cell2mat(options[:,2])
-                self.settings.params_upperPhysicalLimit = cell2mat(options[:,3])
+        # Define default parameters 
+        if nargin==4:
+            params = [np.log10(1.), np.log10(0.01), np.log10(1.5)]
+        
+        # Set parameters for transfer def.
+        setParameters(self, params)     
+        
+        # Initialise the private property, t_limit, 
+        # defining the lower limit to an exponetial 
+        # repsonse def.
+        self.settings.t_limit = np.nan
+        self.settings.weight_at_limit = np.nan
+        
+        if (~isempty(options)) & (iscell(options)):  
+            self.settings.params_lowerPhysicalLimit = cell2mat(options[:,2])
+            self.settings.params_upperPhysicalLimit = cell2mat(options[:,3])
        
        
-        # Set parameters
         def setParameters(self, params)
+
+            # Set parameters
             self.A = params[1,:]
             self.b = params[2,:]
             self.n = params[3,:]            
         
         
-        # Get model parameters
         def getParameters(self):
+
+            # Get model parameters
             params[1,:] = self.A
             params[2,:] = self.b
             params[3,:] = self.n       
@@ -43,6 +47,7 @@ class responsedef_Pearsons():
         
         
         def getParameterValidity(self, params, param_names):
+
             isValidParameter = True(np.shape(params))
 
             A_filt = [param_names=='A']
@@ -68,8 +73,9 @@ class responsedef_Pearsons():
             return isValidParameter
 
         
-        # Return fixed upper and lower bounds to the parameters.
         def getParameters_physicalLimit(self):
+
+            # Return fixed upper and lower bounds to the parameters.
             # NOTE: The upper limit for 'b' is set to that at which
             # exp(-10^b * t) <= sqrt(eps) where t = 1 day.
             #params_upperLimit = [inf log10(-log(sqrt(eps))) inf]
@@ -88,11 +94,12 @@ class responsedef_Pearsons():
             return params_upperLimit, params_lowerLimit
         
         
-        # Return fixed upper and lower plausible parameter ranges. 
-        # This is used to define reasonable range for the initial parameter sets
-        # for the calibration. These parameter ranges are only used in the 
-        # calibration if the user does not input parameter ranges.
         def getParameters_plausibleLimit(self):
+        
+            # Return fixed upper and lower plausible parameter ranges. 
+            # This is used to define reasonable range for the initial parameter sets
+            # for the calibration. These parameter ranges are only used in the 
+            # calibration if the user does not input parameter ranges.
             #params_upperLimit = [np.log10(1./1000./1e-4), np.log10(0.1), np.log10(10.)]
             params_upperLimit = [np.log10(1.), np.log10(0.1), np.log10(10.)]
             #params_lowerLimit = [np.log10(np.sqrt(eps))+2., np.log10(np.sqrt(eps))+2., np.log10(np.sqrt(eps))+2.]
@@ -101,9 +108,9 @@ class responsedef_Pearsons():
             return params_upperLimit, params_lowerLimit
         
         
-        # Calculate impulse-response def.
         def theta(self, t):
 
+            # Calculate impulse-response def.
             # Back-transform parameter 'n' from natural log domain to
             # non-transformed domain. This transformation of n was
             # undertaken because ocassionally the optimal value of n was
@@ -179,6 +186,7 @@ class responsedef_Pearsons():
 
         
         def theta_normalised(self, t):
+
             # Get non-normalised theta result
             result = theta(self, t)
             
@@ -192,11 +200,11 @@ class responsedef_Pearsons():
             return result, A_backTrans
 
             
-        # Calculate integral of impulse-response def from t to inf.
-        # This is used to minimise the impact from a finit forcign data
-        # set.
         def intTheta_upperTail2Inf(self, t):
 
+            # Calculate integral of impulse-response def from t to inf.
+            # This is used to minimise the impact from a finit forcign data
+            # set.
             # Back-transform parameter 'n' from natural log domain to
             # non-transformed domain. This transformation of n was
             # undertaken because ocassionally the optimal value of n was
@@ -243,11 +251,11 @@ class responsedef_Pearsons():
             return result
 
         
-        # Numerical integration of impulse-response def from 0 to 1.
-        # This is undertaken to ensure the first time step is accurately
-        # estimated.
         def intTheta_lowerTail(self, t):
 
+            # Numerical integration of impulse-response def from 0 to 1.
+            # This is undertaken to ensure the first time step is accurately
+            # estimated.
             # Back-transform parameter 'n' from natural log domain to
             # non-transformed domain. This transformation of n was
             # undertaken because ocassionally the optimal value of n was

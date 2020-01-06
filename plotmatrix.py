@@ -1,36 +1,38 @@
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-#PLOTMATRIX Scatter plot matrix.
-#   PLOTMATRIX(X,Y) scatter plots the columns of X against the columns
-#   of Y.  If X is P-by-M and Y is P-by-N, PLOTMATRIX will produce a
-#   N-by-M matrix of axes. PLOTMATRIX(Y) is the same as PLOTMATRIX(Y,Y)
-#   except that the diagonal will be replaced by HIST(Y(:,i)). 
-#
-#   PLOTMATRIX(...,'LineSpec') uses the given line specification in the
-#   string 'LineSpec' '.' is the default (see PLOT for possibilities).  
-#
-#   PLOTMATRIX(AX,...) uses AX as the BigAx instead of GCA.
-#
-#   [H,AX,BigAx,P,PAx] = PLOTMATRIX(...) returns a matrix of handles
-#   to the objects created in H, a matrix of handles to the individual
-#   subaxes in AX, a handle to big (invisible) axes that frame the
-#   subaxes in BigAx, a matrix of handles for the histogram plots in
-#   P, and a matrix of handles for invisible axes that control the
-#   histogram axes scales in PAx.  BigAx is left as the CurrentAxes so
-#   that a subsequent TITLE, XLABEL, or YLABEL will be centered with
-#   respect to the matrix of axes.
-#
-#   Example:
-#       x = randn(50,3) y = x*[-1 2 12 0 11 -2 3]'
-#       plotmatrix(y)
-#
-#   Clay M. Thompson 10-3-94
-#   Copyright 1984-2005 The MathWorks, Inc.
-#   $Revision: 1.1 $  $Date: 2008-11-29 12:04:58 $
 def plotmatrix(varargin):
+
+    #PLOTMATRIX Scatter plot matrix.
+    #   PLOTMATRIX(X,Y) scatter plots the columns of X against the columns
+    #   of Y.  If X is P-by-M and Y is P-by-N, PLOTMATRIX will produce a
+    #   N-by-M matrix of axes. PLOTMATRIX(Y) is the same as PLOTMATRIX(Y,Y)
+    #   except that the diagonal will be replaced by HIST(Y(:,i)). 
+    #
+    #   PLOTMATRIX(...,'LineSpec') uses the given line specification in the
+    #   string 'LineSpec' '.' is the default (see PLOT for possibilities).  
+    #
+    #   PLOTMATRIX(AX,...) uses AX as the BigAx instead of GCA.
+    #
+    #   [H,AX,BigAx,P,PAx] = PLOTMATRIX(...) returns a matrix of handles
+    #   to the objects created in H, a matrix of handles to the individual
+    #   subaxes in AX, a handle to big (invisible) axes that frame the
+    #   subaxes in BigAx, a matrix of handles for the histogram plots in
+    #   P, and a matrix of handles for invisible axes that control the
+    #   histogram axes scales in PAx.  BigAx is left as the CurrentAxes so
+    #   that a subsequent TITLE, XLABEL, or YLABEL will be centered with
+    #   respect to the matrix of axes.
+    #
+    #   Example:
+    #       x = randn(50,3) y = x*[-1 2 12 0 11 -2 3]'
+    #       plotmatrix(y)
+    #
+    #   Clay M. Thompson 10-3-94
+    #   Copyright 1984-2005 The MathWorks, Inc.
+    #   $Revision: 1.1 $  $Date: 2008-11-29 12:04:58 $
     
     # Parse possible Axes input
     cax,args,nargs = axescheck(varargin[:])

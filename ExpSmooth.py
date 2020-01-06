@@ -2,12 +2,14 @@
 import numpy as np
 
 
-#ExpSmooth Summary of this class goes here
-#   Detailed explanation goes here
-class ExpSmooth():
+class ExpSmooth:
     
     
+    #ExpSmooth Summary of this class goes here
+    #   Detailed explanation goes here
+
     def __init__(self, bore_ID, obsHead, forcingData_data,  forcingData_colnames, siteCoordinates, varargin):
+
             # Set observed head data
             self.inputData.head = obsHead
             
@@ -21,6 +23,7 @@ class ExpSmooth():
             
         
         def solve(self, time_points, tor_min, tor_max):
+
             # Check that the model has first been calibrated.
             #if ~isfield(self.variables, 'meanHead_calib') || ~isfield(self.parameters,'Const')
             if ~isfield(self.variables, 'meanHead_calib'):
@@ -328,12 +331,14 @@ class ExpSmooth():
             
         
         def setParameters(self, params, param_names):
+        
             self.parameters.param_names[1] = params[1]
             self.parameters.param_names[2] = params[2]
             self.parameters.param_names[3] = params[3]
         
         
         def getParameters(self):
+        
             params[1,:] = self.parameters.alpha
             params[2,:] = self.parameters.beta
             params[3,:] = self.parameters.gamma
@@ -342,6 +347,7 @@ class ExpSmooth():
         
         
         def getParameters_physicalLimit(self):
+        
             if isfield(self.variables, 'beta_upperLimit'):
                 params_upperLimit = [0., self.variables.beta_upperLimit, 0.]
             else:
@@ -360,6 +366,7 @@ class ExpSmooth():
         
         
         def getParameterValidity(self, params, time_points):
+        
             # Get physical limits and test if parames are within the range
             params_upperLimit, params_lowerLimit = getParameters_physicalLimit(self)
             isValidParameter = (params>=repmat(params_lowerLimit, 1, np.shape(params)[2])) & (params<=repmat(params_upperLimit, 1, np.shape(params)[2]))
@@ -372,47 +379,50 @@ class ExpSmooth():
             return isValidParameter 
        
        
-        # Get the forcing data from the model
         def getForcingData(self):
+
+            # Get the forcing data from the model
             forcingData = []
             forcingData_colnames = [] 
             return forcingData, forcingData_colnames
         
         
-        # Set the forcing data from the model
         #def setForcingData(self, forcingData, forcingData_colnames):
+        # Set the forcing data from the model
         #    # do nothing. The model does not use forcing data.
             
 
-        # Get the obs head data from the model
         def getObservedHead(self):
+
+            # Get the obs head data from the model
             head = self.inputData.head
             return head 
         
         
-    # delete class destructor
-    #
-    # Syntax:
-    #   delete(self)
-    #
-    # Description:
-    #   Loops through parameters and, if not an object, empties them. Else, calls
-    #   the sub-object's destructor.
-    #
-    # Input:
-    #   obj -  model object
-    #
-    # Output:  
-    #   (none)
-    #
-    # Author: 
-    #   Dr. Tim Peterson, The Department of Infrastructure Engineering, 
-    #   The University of Melbourne.
-    #
-    # Date:
-    #   24 Aug 2016
-    ##            
     def delete(self):
+
+        # delete class destructor
+        #
+        # Syntax:
+        #   delete(self)
+        #
+        # Description:
+        #   Loops through parameters and, if not an object, empties them. Else, calls
+        #   the sub-object's destructor.
+        #
+        # Input:
+        #   obj -  model object
+        #
+        # Output:  
+        #   (none)
+        #
+        # Author: 
+        #   Dr. Tim Peterson, The Department of Infrastructure Engineering, 
+        #   The University of Melbourne.
+        #
+        # Date:
+        #   24 Aug 2016
+            
         propNames = properties(self)
         for i in range(len(propNames)):
             if isempty(self.propNames[i]):

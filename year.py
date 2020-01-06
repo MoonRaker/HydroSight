@@ -3,10 +3,11 @@ import numpy as np
 from datetime import datetime
     
 
-#YEAR Summary of this function goes here
-#   Detailed explanation goes here
 def year(date_asNum):
     
+    #YEAR Summary of this function goes here
+    #   Detailed explanation goes here
+
     if isalpha(date_asNum):
         print 'date_asNum must be a date vector, not character.'
         return 

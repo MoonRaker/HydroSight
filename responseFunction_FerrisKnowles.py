@@ -2,8 +2,11 @@
 import numpy as np
 
 
-# Pearson's type III impulse response transfer def class. 
-class responsedef_FerrisKnowles():
+class responsedef_FerrisKnowles:
+
+
+    # Pearson's type III impulse response transfer def class. 
+
 
     def __init__(self, bore_ID, forcingDataSiteID, siteCoordinates, options, params):
         
@@ -123,8 +126,9 @@ class responsedef_FerrisKnowles():
         setParameters(self, params)                 
         
         
-        # Set parameters
         def setParameters(self, params):
+
+            # Set parameters
             self.alpha = params[1,:]
             self.beta  = params[2,:]        
             if isprop(self, 'searchRadiusFrac'):
@@ -133,8 +137,9 @@ class responsedef_FerrisKnowles():
                 self.searchRadiusIsotropicRatio = params[4]
         
         
-        # Get model parameters
         def getParameters(self):
+
+            # Get model parameters
             params[1,:] = self.alpha
             params[2,:] = self.beta    
             param_names = ['alpha', 'beta']
@@ -148,6 +153,7 @@ class responsedef_FerrisKnowles():
         
         
         def getParameterValidity(self, params, param_names):
+
             alpha_filt = param_names=='alpha'
             beta_filt  = param_names=='beta'
             
@@ -169,8 +175,9 @@ class responsedef_FerrisKnowles():
             return isValidParameter 
             
         
-        # Return fixed upper and lower bounds to the parameters.
         def getParameters_physicalLimit(self):
+
+            # Return fixed upper and lower bounds to the parameters.
             params_upperLimit = inf(2,1)
             params_lowerLimit = [log10(sqrt(eps)) log10(eps)]            
             
@@ -184,11 +191,12 @@ class responsedef_FerrisKnowles():
             return params_upperLimit, params_lowerLimit
         
         
-        # Return fixed upper and lower plausible parameter ranges. 
-        # This is used to define reasonable range for the initial parameter sets
-        # for the calibration. These parameter ranges are only used in the 
-        # calibration if the user does not input parameter ranges.
         def getParameters_plausibleLimit(self):
+
+            # Return fixed upper and lower plausible parameter ranges. 
+            # This is used to define reasonable range for the initial parameter sets
+            # for the calibration. These parameter ranges are only used in the 
+            # calibration if the user does not input parameter ranges.
             params_upperLimit = [ 1., -1.]
             params_lowerLimit = [-5., -7.]            
 
@@ -202,8 +210,9 @@ class responsedef_FerrisKnowles():
             return params_upperLimit, params_lowerLimit
         
         
-        # Calculate impulse-response def for each pumping bore.
         def theta(self, t):  
+
+            # Calculate impulse-response def for each pumping bore.
             # Loop though each production bore and, if image wells exist,
             # account for them in the drawdown.
             result = np.zeros([np.shape(t)[1]), np.shape(self.settings.pumpingBores)[1])])
@@ -248,19 +257,21 @@ class responsedef_FerrisKnowles():
             return result 
         
         
-        # Calculate integral of impulse-response def from t to inf.
-        # This is used to minimise the impact from a finit forcign data
-        # set.
-        # TODO: IMPLEMENTED integral of theta
         def intTheta_upperTail2Inf(self, t):
+
+            # Calculate integral of impulse-response def from t to inf.
+            # This is used to minimise the impact from a finit forcign data
+            # set.
+            # TODO: IMPLEMENTED integral of theta
             result = np.zeros([np.shape(self.settings.pumpingBores)[1], 1]) 
             return result
 
 
-        # Numerical integration of impulse-response def from 0 to 1.
-        # This is undertaken to ensure the first time step is accuratly
-        # estimated. This was found to be important for highly transmissive aquifers.
         def intTheta_lowerTail(self, t):
+
+            # Numerical integration of impulse-response def from 0 to 1.
+            # This is undertaken to ensure the first time step is accuratly
+            # estimated. This was found to be important for highly transmissive aquifers.
             # Loop though each production bore and, if image wells exist,
             # account for them in the drawdown.
             result = np.zeros([np.shape(t)[1], np.shape(self.settings.pumpingBores)[1]])
@@ -303,15 +314,17 @@ class responsedef_FerrisKnowles():
         return result 
         
         
-        # Transform the estimate of the response def * the forcing.
         def transform_h_star(self, h_star_est):
+
+           # Transform the estimate of the response def * the forcing.
            result = h_star_est[:,2]
            return result
         
         
-        # Extract the estimates of aquifer properties from the values of
-        # alpha, beta and gamma.
         def getDerivedParameters(self):
+
+            # Extract the estimates of aquifer properties from the values of
+            # alpha, beta and gamma.
             T = 1 ./ (4.*np.pi .* 10.**self.alpha)
             S = 4 .* 10.**self.beta .* T            
             params = [T, S]
@@ -320,15 +333,16 @@ class responsedef_FerrisKnowles():
         
         
         def getDerivedDataTypes(self):
+
             derivedData_types = cell(np.shape(self.settings.pumpingBores)[1], 1)
             for i in range(np.shape(self.settings.pumpingBores)[1]):
                 derivedData_types[i,1] = [self.settings.pumpingBores[i,1].BoreID, ' weighting']
             return derivedData_types 
         
         
-        # Return the theta values for the GUI 
         def getDerivedData(self,derivedData_variable,t,axisHandle):
             
+            # Return the theta values for the GUI 
             import matplotlib as mpl
             import matplotlib.pyplot as plt
             
@@ -404,29 +418,30 @@ class responsedef_FerrisKnowles():
             return derivedData, derivedData_names
         
         
-    # delete class destructor
-    #
-    # Syntax:
-    #   delete(self)
-    #
-    # Description:
-    #   Loops through parameters and, if not an selfect, empties them. Else, calls
-    #   the sub-selfect's destructor.
-    #
-    # Input:
-    #   self -  model selfect
-    #
-    # Output:  
-    #   (none)
-    #
-    # Author: 
-    #   Dr. Tim Peterson, The Department of Infrastructure Engineering, 
-    #   The University of Melbourne.
-    #
-    # Date:
-    #   24 Aug 2016
-    ##            
     def delete(self):
+
+        # delete class destructor
+        #
+        # Syntax:
+        #   delete(self)
+        #
+        # Description:
+        #   Loops through parameters and, if not an object, empties them. Else, calls
+        #   the sub-object's destructor.
+        #
+        # Input:
+        #   self -  model selfect
+        #
+        # Output:  
+        #   (none)
+        #
+        # Author: 
+        #   Dr. Tim Peterson, The Department of Infrastructure Engineering, 
+        #   The University of Melbourne.
+        #
+        # Date:
+        #   24 Aug 2016
+
         propNames = properties(self)
         for i in range(len(propNames)):
             if isempty(self.propNames[i]):

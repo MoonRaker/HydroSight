@@ -7,6 +7,7 @@ def findClassDefsUsingAbstractName( abstractName, model_file_name):
     # Set some file names to ignore. This is undertaken because
     # requiredFilesAndProducts() (using matlab 2014b) appears to give inconsistent
     # results and for to reduce GUI start up time.
+    
     fnames_ignore = ['model_TFN',
                      'example_TFN_model',
                      'HydroSight',

@@ -3,8 +3,9 @@ import numpy as np
 from datetime import datetime
 
 
-#HOUR Summary of this function goes here
 def hour(date_asNum):
+
+    #HOUR Summary of this function goes here
 
     if isalpha(date_asNum):
         print 'date_asNum must be a date vector, not character.'

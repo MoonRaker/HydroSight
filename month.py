@@ -3,9 +3,10 @@ import numpy as np
 from datetime import datetime
 
     
-#MONTH Summary of this function goes here
 def month(date_asNum):
     
+    #MONTH Summary of this function goes here
+
     if isalpha(date_asNum):
         print 'date_asNum must be a date vector, not character.'
         return

@@ -2,12 +2,14 @@
 import numpy as np
 
 
-#EXPORTDATATABLE Summary of this function goes here
-#   Detailed explanation goes here
 def doDataQualityAnalysis(headData, boreDepth, surface_elevation, casing_length, constuction_date, 
                           checkMinSartDate, checkMaxEndDate, chechDuplicateDates, checkMinHead, 
                           checkMaxHead, RateofChangeThreshold, ConstHeadThreshold, outlierNumStDevs, 
                           outlierForwardBackward):
+
+
+    #EXPORTDATATABLE Summary of this function goes here
+    #   Detailed explanation goes here
 
     # Handle situation where outlierForwardBackward is not set.
     if nargin<14:

@@ -2,11 +2,14 @@
 import numpy as np
 
 
-# Pearson's type III impulse response transfer function class. 
-class responseFunction_Bruggeman(self):
+class responseFunction_Bruggeman:
+
+
+    # Pearson's type III impulse response transfer function class. 
 
 
     def __init__(self, bore_ID, forcingDataSiteID, siteCoordinates, options, params):           
+
         # Define default parameters 
         if nargin==4:
             params=[10., 10., 10.]
@@ -18,15 +21,17 @@ class responseFunction_Bruggeman(self):
         self.settings = []
        
        
-        # Set parameters
         def setParameters(self, params):
+    
+            # Set parameters
             self.alpha = params[1,:]
             self.beta  = params[2,:]
             self.gamma = params[3,:]            
         
         
-        # Get model parameters
         def getParameters(self):
+
+            # Get model parameters
             params[1,:] = self.alpha
             params[2,:] = self.beta
             params[3,:] = self.gamma       
@@ -35,6 +40,7 @@ class responseFunction_Bruggeman(self):
         
         
         def getParameterValidity(self, params, param_names):
+
             # Get physical bounds.
             params_upperLimit, params_lowerLimit = getParameters_physicalLimit(self)
             # Check parameters are within bounds and T>0 and 0<S<1.
@@ -43,25 +49,28 @@ class responseFunction_Bruggeman(self):
             return isValidParameter
 
 
-        # Return fixed upper and lower bounds to the parameters.
         def getParameters_physicalLimit(self):
+
+            # Return fixed upper and lower bounds to the parameters.
             params_upperLimit = np.inf*np.ones([3,1])
             params_lowerLimit = np.zeros([3,1])
             return params_upperLimit, params_lowerLimit
         
         
-        # Return fixed upper and lower plausible parameter ranges. 
-        # This is used to define reasonable range for the initial parameter sets
-        # for the calibration. These parameter ranges are only used in the 
-        # calibration if the user does not input parameter ranges.
         def getParameters_plausibleLimit(self):
+
+            # Return fixed upper and lower plausible parameter ranges. 
+            # This is used to define reasonable range for the initial parameter sets
+            # for the calibration. These parameter ranges are only used in the 
+            # calibration if the user does not input parameter ranges.
             params_upperLimit = [100., 100., 100.]
             params_lowerLimit = [  0.,   0.,   0.]
             return params_upperLimit, params_lowerLimit
         
         
-        # Calculate impulse-response function.
         def theta(self, t):
+
+            # Calculate impulse-response function.
             result = -self.gamma ./ np.sqrt(np.pi*self.beta**2./self.alpha**2. .* t .** 3.) .* np.exp(-self.alpha**2. ./(self.beta .^ 2. .* t)-self.beta .** 2.*t)
             # Set theta at first time point to zero. NOTE: the first time
             # point is more accuratly estimated by intTheta_lowerTail().
@@ -69,43 +78,49 @@ class responseFunction_Bruggeman(self):
             return result 
         
         
-        # Calculate integral of impulse-response function from t to inf.
-        # This is used to minimise the impact from a finit forcign data
-        # set.
-        # TODO: IMPLEMENTED integral of theta
         def intTheta_upperTail2Inf(self, t):
+        
+            # Calculate integral of impulse-response function from t to inf.
+            # This is used to minimise the impact from a finit forcign data
+            # set.
+            # TODO: IMPLEMENTED integral of theta
             result = 0. 
             return result 
 
 
-        # Calculate integral of impulse-response function from t to inf.
-        # This is used to minimise the impact from a finit forcign data set.
-        # TODO: IMPLEMENTED integral of theta
         def intTheta_lowerTail(self, t):
+        
+            # Calculate integral of impulse-response function from t to inf.
+            # This is used to minimise the impact from a finit forcign data set.
+            # TODO: IMPLEMENTED integral of theta
             result = 0. 
             return result 
         
         
-        # Transform the estimate of the response function * the forcing.
         def transform_h_star(self, h_star_est):
-           result = h_star_est[:, end]
-           return result 
+        
+            # Transform the estimate of the response function * the forcing.
+            result = h_star_est[:, end]
+            return result 
         
         
-        # Return the derived variables.
         def getDerivedParameters(self):
+
+            # Return the derived variables.
             params = []
             param_names = cell(0,2)  
             return params, param_names
 
 
         def getDerivedDataTypes(self):
+
             derivedData_types = 'weighting'
             return derivedData_types 
              
              
-        # Return the theta values for the GUI 
         def getDerivedData(self, derivedData_variable, t, axisHandle):
+
+            # Return the theta values for the GUI 
             params, param_names = getParameters(self)
             nparamSets = np.shape(params)[2]
             setParameters(self, params[:,1])
@@ -164,32 +179,34 @@ class responseFunction_Bruggeman(self):
             plt.xlabel(axisHandle, 'Time lag (days)')
             plt.ylabel(axisHandle, 'Weight')            
             #box(axisHandle,'on')
+            
             return derivedData, derivedData_names
         
         
-    # delete class destructor
-    #
-    # Syntax:
-    #   delete(obj)
-    #
-    # Description:
-    #   Loops through parameters and, if not an object, empties them. Else, calls
-    #   the sub-object's destructor.
-    #
-    # Input:
-    #   obj -  model object
-    #
-    # Output:  
-    #   (none)
-    #
-    # Author: 
-    #   Dr. Tim Peterson, The Department of Infrastructure Engineering, 
-    #   The University of Melbourne.
-    #
-    # Date:
-    #   24 Aug 2016
-    ##            
     def delete(self):
+
+        # delete class destructor
+        #
+        # Syntax:
+        #   delete(obj)
+        #
+        # Description:
+        #   Loops through parameters and, if not an object, empties them. Else, calls
+        #   the sub-object's destructor.
+        #
+        # Input:
+        #   obj -  model object
+        #
+        # Output:  
+        #   (none)
+        #
+        # Author: 
+        #   Dr. Tim Peterson, The Department of Infrastructure Engineering, 
+        #   The University of Melbourne.
+        #
+        # Date:
+        #   24 Aug 2016
+              
         propNames = properties(self)
         for i in range(len(propNames)):
             if isempty(self.propNames[i]):

@@ -1,10 +1,13 @@
 
 
-class(responseFunction_abstract):
+class responseFunction_abstract:
+
     #RESPONSEFUNCTION_ABSTRACT Summary of this class goes here
     #Detailed explanation goes here
-                  
+
+
     def __init__(self):
+    
         setParameters(self, params)
             
         self.params, self.param_names = getParameters(self)

@@ -3,9 +3,10 @@ import numpy as np
 from datetime import datetime
 
     
-#MINUTE Summary of this function goes here
 def minute(date_asNum):
     
+    #MINUTE Summary of this function goes here
+
     if isalpha(date_asNum):
         print 'date_asNum must be a date vector, not character.'
         return 

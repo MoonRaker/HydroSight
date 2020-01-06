@@ -3,6 +3,7 @@ import numpy as np
 
 
 def outlierDetection(headData, isOutlier, nSigma_threshold):
+
     # Initialise outputs    
     noise_sigma = np.inf
     x_opt = []
